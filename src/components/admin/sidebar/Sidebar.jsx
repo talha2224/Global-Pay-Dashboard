@@ -66,17 +66,17 @@ const Sidebar = () => {
 
             <div>
               {navData?.map((i) => (
-                <Link to={`/dashboard/${i.link}`} key={i.id} className={`flex ${location == i.link && "bg-[#FF6600]"} p-2 rounded-md items-center gap-x-3 mb-2 cursor-pointer ${location == i.link ? "text-white" : "text-[#a6b0cf]"}`}>
+                <Link to={`/admin/dashboard/${i.link}`} key={i.id} className={`flex ${location == i.link && "bg-[#FF6600]"} p-2 rounded-md items-center gap-x-3 mb-2 cursor-pointer ${location == i.link ? "text-white" : "text-[#a6b0cf]"}`}>
                   <div>{i.icon}</div>
                   <p className='text-sm'>{i.name}</p>
                 </Link>
               ))}
             </div>
 
-            <div className='absolute bottom-5 w-[80%] flex items-center gap-x-3 '>
-              <IoLogOut onClick={() => nav("/admin/login")} className='text-[#FF3B30] cursor-pointer text-xl' />
-              <p className='text-[#C9C9C9]'>Log out</p>
-            </div>
+        <div onClick={() => setshowLogout(!showLogout)} className='absolute bottom-5 w-[80%] flex items-center gap-x-3 cursor-pointer '>
+          <IoLogOut  className='text-[#FF3B30] cursor-pointer text-xl' />
+          <p className='text-[#C9C9C9]'>Log out</p>
+        </div>
 
           </div>
         )}
