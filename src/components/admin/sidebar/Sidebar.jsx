@@ -10,7 +10,7 @@ const Sidebar = () => {
 
   const location = useLocation().pathname.split("/")[2];
   const [showLogout, setshowLogout] = useState(false)
-  const { isNavOpen } = useSidebar();
+  const { isNavOpen,toggleNav} = useSidebar();
   const sidebarRef = useRef(null);
   const nav = useNavigate();
 
@@ -65,11 +65,11 @@ const Sidebar = () => {
             <p className='text-[#a6b0cf] mt-[2rem] mb-4 text-xs'>MENU</p>
 
             <div>
-              {navData?.map((i) => (
-                <Link to={`/admin/dashboard/${i.link}`} key={i.id} className={`flex ${location == i.link && "bg-[#FF6600]"} p-2 rounded-md items-center gap-x-3 mb-2 cursor-pointer ${location == i.link ? "text-white" : "text-[#a6b0cf]"}`}>
+              {adminNav?.map((i) => (
+                <p onClick={()=>{nav(`/admin/dashboard/${i.link}`);toggleNav(false)}} to={`/admin/dashboard/${i.link}`} key={i.id} className={`flex ${location == i.link && "bg-[#FF6600]"} p-2 rounded-md items-center gap-x-3 mb-2 cursor-pointer ${location == i.link ? "text-white" : "text-[#a6b0cf]"}`}>
                   <div>{i.icon}</div>
                   <p className='text-sm'>{i.name}</p>
-                </Link>
+                </p>
               ))}
             </div>
 
