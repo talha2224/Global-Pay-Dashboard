@@ -49,19 +49,19 @@ const Header = ({ location }) => {
 
             <div className='flex items-center gap-x-4'>
                 <GiHamburgerMenu className='lg:hidden block cursor-pointer' onClick={() => toggleNav(!isNavOpen)} />
-                <p className='sm:text-lg'>{location === "home" ? "Dashboard" : location.charAt(0).toUpperCase() + location.slice(1)}</p>
+                <p>Welcome</p>
+                {/* <p className='sm:text-lg'>{location === "home" ? "Dashboard" : location.charAt(0).toUpperCase() + location.slice(1)}</p> */}
             </div>
 
 
             <div className='flex items-center gap-x-3 sm:gap-x-4'>
 
-                <div className='px-4 py-2 rounded-full bg-[#037AE0] text-white text-sm'>Deposit</div>
+                <div className='px-4 py-2 rounded-full bg-[#037AE0] text-white text-xs'>Create Api Key</div>
 
                 <div className='w-[1.8rem] h-[1.8rem] bg-white flex justify-center items-center text-[#575757] rounded-full'>
                     <IoMdNotificationsOutline />
                 </div>
 
-                <RxEnterFullScreen className='text-[1.3rem] cursor-pointer' onClick={toggleFullScreen} title={isFullScreen ? "Exit Fullscreen" : "Enter Fullscreen"} />
 
                 <img src={AvatarIcon} alt="HopOn Dashboard- Avatar" className='max-w-8 min-w-8 cursor-pointer' />
             </div>

@@ -1,237 +1,88 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { FaPhone } from 'react-icons/fa'
-import { RiTeamFill } from "react-icons/ri";
-import { SiGoogleads } from 'react-icons/si'
-import { MdModeOfTravel } from "react-icons/md";
-import { Doughnut, Line } from "react-chartjs-2"
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ArcElement } from "chart.js";
-import AvatarIcon from '../../assets/dashboard/avatar.jpg'
-import config from '../../config';
-import axios from 'axios';
-import { IoCarSportSharp } from 'react-icons/io5';
+import { useState } from "react"
+import Illustration from '../../assets/dashboard/illustration.png'
+import { FaEye } from "react-icons/fa";
+import USD from '../../assets/dashboard/usd.png'
+import USDT from '../../assets/dashboard/usdt.png'
+import BTC from '../../assets/dashboard/btc.png'
+import Eth from '../../assets/dashboard/eth.png'
+import { IoIosGift } from "react-icons/io";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Tooltip, Legend);
 
 const Home = () => {
-  const [dashboardData, setDashboardData] = useState([]);
-  const [timePeriod, setTimePeriod] = useState('month');
+  const [initialModel, setInitialModel] = useState(true)
 
-  const fetchData = async () => {
-    try {
-      let res = await axios.get(`${config.baseUrl}/dashboard/data`);
-      setDashboardData(res.data?.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const transformData = (data, period) => {
-    let groupedData = {};
-    data.forEach(call => {
-      const date = new Date(call?.createdAt);
-      if (date) {
-        const month = date.getMonth();
-        const year = date.getFullYear();
-        const timeKey = period === 'month' ? month : year;
-        if (!groupedData[timeKey]) {
-          groupedData[timeKey] = 0;
-        }
-        groupedData[timeKey] += 1;
-      }
-    });
-
-    let labels = [];
-    let chartData = [];
-
-    if (period === 'year') {
-      const currentYear = new Date().getFullYear();
-      const numYearsToShow = 5;
-      const startYear = currentYear - (numYearsToShow - 1);
-      const endYear = currentYear;
-      for (let year = startYear; year <= endYear; year++) {
-        labels.push(year.toString());
-        chartData.push(groupedData[year] || 0);
-      }
-    } else {
-      labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-      chartData = Array(12).fill(0).map((_, i) => groupedData[i] || 0);
-    }
-
-    return {
-      labels,
-      datasets: [{
-        label: `Bookings (${period})`,
-        data: chartData,
-        borderColor: "#FF6600",
-        backgroundColor: "rgba(234, 88, 12, 0.2)",
-        pointBackgroundColor: "#FF6600",
-        tension: 0.4,
-      }],
-    };
-  };
-
-  const data = transformData(dashboardData?.totalBookingsData || [], timePeriod);
-  const options = { responsive: true, maintainAspectRatio: true, scales: { y: { beginAtZero: true, }, }, };
-  const successRate = (dashboardData?.completedBookingsData?.length || 0) / (dashboardData?.totalBookingsData?.length || 1) * 100;
-
-
-  const donutData = useMemo(() => {
-    const totalCalls = Number(dashboardData?.totalBookingsData?.length) || 0;
-    const successfulCalls = Number(dashboardData?.completedBookingsData?.length) || 0;
-    const adjustZero = (num) => (num === 0 ? 0.000001 : num);
-    return { labels: ["Total Booking", "Completed",], datasets: [{ data: [adjustZero(totalCalls), adjustZero(successfulCalls)], backgroundColor: ["#4F8EF7", "#FFD66B"], hoverBackgroundColor: ["#4F8EF7", "#FFD66B", "#FF8F6B"], borderWidth: 0, cutout: "75%", }], };
-  }, [dashboardData]);
-
-  const donutOptions = {
-    plugins: {
-      tooltip: {
-        enabled: true,
-        callbacks: {
-          label: (context) => {
-            let label = context?.label || '-';
-            if (label) {
-              label += ': ';
-            }
-            label += context.formattedValue;
-            return label;
-          },
-          title: (context) => {
-            return context[0]?.label || "-";
-          },
-        },
-        position: 'average',
-        zIndex: 10000
-      },
-      legend: {
-        display: false,
-      },
-    },
-    responsive: true,
-    maintainAspectRatio: false,
-  };
-
-  const handleTimePeriodChange = (event) => {
-    setTimePeriod(event.target.value);
-  };
   return (
 
 
     <div className='flex-1 overflow-x-auto'>
 
-      {/* CARDS  */}
-      <div className='flex justify-between items-center w-[100%] overflow-x-auto gap-x-5'>
-
-        <div className='min-w-[276px] h-[116px] bg-white rounded-md flex items-center px-5'>
-
-          <div className='flex items-start gap-x-6'>
-
-            <div className={`w-[50px] h-[50px] rounded-full flex justify-center items-center bg-[#5B93FF] bg-opacity-10`}>
-              <RiTeamFill className='text-xl text-[#5B93FF]' />
-            </div>
-
-            <div>
-              <h1 className='mb-1 text-xl'>{dashboardData?.totalRiders}</h1>
-              <p className='text-[#a6b0cf] text-sm'>{"Total Riders"}</p>
-            </div>
+      <div className="mt-0 bg-white p-5 rounded-xl flex justify-between items-center flex-wrap">
+        <div className="mt-2">
+          <p className="text-gray-500">Est. Total Value (USD)</p>
+          <div className="flex items-center gap-2">
+            <p className="text-3xl font-light">$5.00</p>
+            <FaEye className="text-gray-500 text-lg" />
           </div>
-
         </div>
-
-        <div className='min-w-[276px] h-[116px] bg-white rounded-md flex items-center px-5'>
-
-          <div className='flex items-start gap-x-6'>
-
-            <div className={`w-[50px] h-[50px] rounded-full flex justify-center items-center bg-[#FF8F6B] bg-opacity-10`}>
-              <IoCarSportSharp className='text-xl text-[#FF8F6B]' />
-            </div>
-
-            <div>
-              <h1 className='mb-1 text-xl'>{dashboardData?.totalDrivers}</h1>
-              <p className='text-[#a6b0cf] text-sm'>{"Total Drivers"}</p>
-            </div>
-          </div>
-
-        </div>
-
-
-        <div className='min-w-[276px] h-[116px] bg-white rounded-md flex items-center px-5'>
-
-          <div className='flex items-start gap-x-6'>
-
-            <div className={`w-[50px] h-[50px] rounded-full flex justify-center items-center bg-[#E71D36] bg-opacity-10`}>
-              <MdModeOfTravel className='text-xl text-[#E71D36]' />
-            </div>
-
-            <div>
-              <h1 className='mb-1 text-xl'>{dashboardData?.totalBookings}</h1>
-              <p className='text-[#a6b0cf] text-sm'>{"Total Rides"}</p>
-            </div>
-          </div>
-
-        </div>
-
-
-        <div className='min-w-[276px] h-[116px] bg-white rounded-md flex items-center px-5'>
-
-          <div className='flex items-start gap-x-6'>
-
-            <div className={`w-[50px] h-[50px] rounded-full flex justify-center items-center bg-[#605BFF] bg-opacity-10`}>
-              <SiGoogleads className='text-xl text-[#605BFF]' />
-            </div>
-
-            <div>
-              <h1 className='mb-1 text-xl'>{dashboardData?.completedBookings}</h1>
-              <p className='text-[#a6b0cf] text-sm'>{"Completed Rides"}</p>
-            </div>
-          </div>
-
-        </div>
-
+        <button className="px-5 py-2 rounded-full text-[#037AE0] bg-[#E3EFF9] mt-2">Withdraw</button>
       </div>
 
-      {/* CHARTS  */}
 
-      <div className='flex justify-between items-start mt-8 gap-x-6 flex-wrap'>
+      <div className="mt-5 flex justify-between items-center gap-x-4 overflow-x-auto">
 
-        {/* LINE CHART  */}
-        <div className="bg-white rounded-md lg:min-w-[70%] p-5 lg:flex-none flex-1 mt-2">
-          <div className='flex  justify-between items-center'>
-            <p className="text-lg font-medium mb-2">Total number of bookings ({timePeriod === 'month' ? 'Monthly' : 'Yearly'})</p>
-            <select value={timePeriod || ""} onChange={handleTimePeriodChange} className="bg-[#e5e7ea] p-2 rounded-md outline-none text-sm appearance-none max-w-[8rem] truncate cursor-pointer">
-              <option key={"month"} value={"month"}>Monthly</option>
-              <option key={"year"} value={"year"}>Yearly</option>
-            </select>
+        <div className="min-w-[20rem] h-[4rem] rounded-md px-3 bg-[#E4F2EE] flex justify-between items-center">
+          <div className="flex items-center gap-x-2">
+            <img src={USD} alt="" />
+            <div>
+              <p>USD</p>
+              <p className="text-[#4CD964] text-sm">+2.0%</p>
+            </div>
           </div>
-          <Line data={data} options={options} height={103} />
+          <div>
+            <p>$5.00</p>
+            <p className="text-sm text-[#8F8F8F]">5.00 USD</p>
+          </div>
         </div>
 
-        {/* PIE CHART  */}
-
-        <div className="bg-white rounded-md p-5 h-[23rem] flex-1 mt-2">
-          <p className="text-lg font-medium mb-4">Analytics</p>
-          <div className="flex justify-center items-center flex-col">
-            <div className="relative w-[12rem] h-[12rem]">
-              <Doughnut data={donutData} options={donutOptions} />
-              <div className="absolute top-[4rem] left-[3rem] flex flex-col items-center justify-center">
-                <p className="text-4xl font-bold text-black">{successRate.toFixed(1)}%</p>
-                <p className="text-[0.6rem] text-gray-600 ml-[-10px]">Pending bookings</p>
-              </div>
+        <div className="min-w-[20rem] h-[4rem] rounded-md px-3 bg-[#F5EEE4] flex justify-between items-center">
+          <div className="flex items-center gap-x-2">
+            <img src={BTC} alt="" />
+            <div>
+              <p>BTC</p>
+              <p className="text-[#4CD964] text-sm">+2.0%</p>
             </div>
-            <div className="flex justify-between w-full mt-8">
+          </div>
+          <div>
+            <p>$5.00</p>
+            <p className="text-sm text-[#8F8F8F]">5.00 USD</p>
+          </div>
+        </div>
 
-              <div className="flex items-center">
-                <div className="w-3 h-3 bg-[#4F8EF7] rounded-full mr-1"></div>
-                <span className="text-xs">Total bookings</span>
-              </div>
-              <div className="flex items-center">
-                <div className="w-3 h-3 bg-[#FFD66B] rounded-full mr-1"></div>
-                <span className="text-xs">Completed</span>
-              </div>
+        <div className="min-w-[20rem] h-[4rem] rounded-md px-3 bg-[#ffff] flex justify-between items-center">
+          <div className="flex items-center gap-x-2">
+            <img src={Eth} alt="" />
+            <div>
+              <p>ETH</p>
+              <p className="text-[#4CD964] text-sm">+2.0%</p>
             </div>
+          </div>
+          <div>
+            <p>$5.00</p>
+            <p className="text-sm text-[#8F8F8F]">5.00 USD</p>
+          </div>
+        </div>
+
+        <div className="min-w-[20rem] h-[4rem] rounded-md px-3 bg-[#F5EEE4] flex justify-between items-center">
+          <div className="flex items-center gap-x-2">
+            <img src={USDT} alt="" />
+            <div>
+              <p>USDT</p>
+              <p className="text-[#4CD964] text-sm">+2.0%</p>
+            </div>
+          </div>
+          <div>
+            <p>$5.00</p>
+            <p className="text-sm text-[#8F8F8F]">5.00 USD</p>
           </div>
         </div>
 
@@ -239,79 +90,72 @@ const Home = () => {
       </div>
 
 
-      {/* TABLES  */}
+      <div className="mt-5 md:flex justify-between items-start gap-x-4 flex-wrap">
 
-      <div className='flex justify-between items-start mt-8 gap-x-6 flex-wrap'>
-        <div className='bg-white rounded-md lg:max-w-[70%] lg:min-w-[70%]  p-5 lg:flex-none min-w-[100%] flex-1 mt-2  overflow-x-auto'>
-          <p className="text-lg font-medium mb-2">Booking Overview</p>
-          {
-            dashboardData?.totalBookingsData?.length > 0 ?
-              <div className="overflow-x-auto w-full">
-                <table className="min-w-[800px] border-collapse overflow-x-auto"> {/* Ensure table is wide enough */}
-                  <thead>
-                    <tr>
-                      <th className="border-b py-2 px-4 text-left text-sm font-normal text-nowrap">Booking ID</th>
-                      <th className="border-b py-2 px-4 text-left text-sm font-normal text-nowrap">Passenger Name</th>
-                      <th className="border-b py-2 px-4 text-left text-sm font-normal text-nowrap">Driver Name</th>
-                      <th className="border-b py-2 px-4 text-left text-sm font-normal text-nowrap">Pickup Address</th>
-                      <th className="border-b py-2 px-4 text-left text-sm font-normal text-nowrap">Dropoff Address</th>
-                      <th className="border-b py-2 px-4 text-left text-sm font-normal text-nowrap">Status</th>
-                      <th className="border-b py-2 px-4 text-left text-sm font-normal text-nowrap">Ride Cost</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {dashboardData?.totalBookingsData.map((data, i) => {
-                      if (i < 4) {
-                        return (
-                          <tr key={data._id} className="border-b hover:bg-gray-100 text-sm font-normal">
-                            <td className="py-2 px-4 text-sm font-normal text-nowrap">{data?._id}</td>
-                            <td className="py-2 px-4 flex items-center text-sm font-normal text-nowrap">{data?.rider?.first_name}</td>
-                            <td className="py-2 px-4 text-sm font-normal text-nowrap">{data?.driver?.first_name}</td>
-                            <td className="py-2 px-4 text-sm font-normal text-nowrap">{data?.pickUpAddress}</td>
-                            <td className="py-2 px-4 text-sm font-normal text-nowrap">{data?.dropoffAddress}</td>
-                            <td className="py-2 px-4 text-sm font-normal text-nowrap"><button className={`${data?.status?.toLowerCase()?.includes("completed") ? "bg-[#4285F4]" : data?.leadStatus?.toLowerCase()?.includes("lost") ? "bg-red-500" : "bg-green-500"} text-xs text-white px-2 rounded-[0.3rem] text-nowrap py-1`}>{data?.status}</button></td>
-                            <td className="py-2 px-4 text-sm font-normal text-nowrap">{data?.fare ? "$ " + data?.fare : "-"}</td>
-                          </tr>
-                        )
-                      }
-                    })}
-                  </tbody>
-                </table>
-              </div> :
-              <p className='text-[#000] text-sm mt-4  flex-1 text-center'>Oops! No Booking Found</p>
-          }
-        </div>
+        <div className="md:w-[30%] p-5 bg-white rounded-md mt-3">
 
+          <h1 className="font-medium">Transactions</h1>
 
-        <div className="bg-white rounded-md p-5 flex-1 mt-2 min-w-[20rem]">
-          <p className="text-lg font-medium mb-4">Driver Overview</p>
-          {
-            dashboardData?.totalDriversData?.length > 0 ?
-              <div className="">
-
-                {dashboardData?.totalDriversData?.map((i, ind) => {
-                  if (ind < 2) {
-                    return (
-                      <div key={ind} className='mb-2 flex items-start gap-x-4 border-b py-2'>
-                        <div className='w-[3rem] h-[3rem] rounded-md flex justify-center items-center'>
-                          <img src={AvatarIcon} alt="HopOn Dashboard - Drivers" />
-                        </div>
-                        <div>
-                          <p className='text-lg'>{i.first_name}</p>
-                          <p className='text-sm mt-1'>Contact: {i?.phone_number}</p>
-                        </div>
-                      </div>
-                    )
-                  }
-                })}
+          <div className="flex justify-between items-start mt-2">
+            <div className="flex items-center gap-2">
+              <div className="bg-red-100 p-2 rounded-full">
+                <IoIosGift name="gift" className="text-red-500 text-xl" />
               </div>
-              :
-              <p className='text-[#000] text-sm mt-4 flex-1 text-center'>Oops! No Drivers Found</p>
-          }
+              <div>
+                <p className="text-lg">Reward</p>
+                <p className="text-gray-500 text-sm">Feb 2 - 2019 - 19:28</p>
+              </div>
+            </div>
+            <div>
+              <p className="text-lg text-green-500">+5.00 USD</p>
+              <div className="bg-blue-100 px-1 py-0.5 rounded mt-1">
+                <p className="text-blue-600 text-xs text-center">Received</p>
+              </div>
+            </div>
+          </div>
+
         </div>
 
+
+        <div className="flex-1 p-5 bg-white rounded-md mt-3 flex items-center gap-x-6 flex-wrap">
+
+          <button className="text-sm text-[#00D725] px-5 py-2 rounded-full bg-[#E5FBE0] my-2">Deposit</button>
+          <button className="text-sm text-[#00C7BE] px-5 py-2 rounded-full bg-[#E5F9F8] my-2">Send</button>
+          <button className="text-sm text-[#FF9500] px-5 py-2 rounded-full bg-[#FFF4E5] my-2">Convert</button>
+          <button className="text-sm text-[#037AE0] px-5 py-2 rounded-full bg-[#E6F2FC] my-2">Withdraw</button>
+          <button className="text-sm text-[#00C7BE] px-5 py-2 rounded-full bg-[#E5F9F8] my-2">Scan Qr Code</button>
+
+        </div>
 
       </div>
+
+
+      {
+        initialModel && (
+
+          <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 flex justify-center items-center">
+
+            <div className="bg-white rounded-md flex justify-center items-center flex-col w-[25rem] p-5">
+
+              <img src={Illustration} />
+              <h1 className="text-xl mt-4">You've Earned $5 Credit!</h1>
+              <h1 className="text-sm text-[#848484] text-center">Congratulations! You've received a $5 credit reward. Complete your KYC verification to unlock and use your reward.</h1>
+
+              <button onClick={() => setInitialModel(false)} style={{ backgroundColor: "#037AE0", width: "100%", height: 40, justifyContent: "center", alignItems: "center", marginTop: 8, borderRadius: 100 }}>
+                <h1 style={{ color: "#fff" }}>Complete KYC Now</h1>
+              </button>
+
+              <button onClick={() => setInitialModel(false)} style={{ justifyContent: "center", alignItems: "center", marginTop: 10 }}>
+                <h1 style={{ color: "#1E1E1E" }}>Later</h1>
+              </button>
+
+            </div>
+
+          </div>
+
+        )
+      }
+
 
     </div>
 

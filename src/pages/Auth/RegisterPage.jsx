@@ -1,102 +1,75 @@
 import React, { useState } from 'react'
-import Logo from '../../assets/leadbot.svg'
-import RegisterBg from '../../assets/auth/illustration.png'
-import { Link, useNavigate } from 'react-router-dom'
-import config from '../../config'
-import toast from 'react-hot-toast'
-import axios from 'axios'
-import { Helmet } from 'react-helmet'
+import AuthImage from '../../assets/auth/auth1.png'
+import Google from '../../assets/auth/google.png'
+import Apple from '../../assets/auth/apple.png'
+import BlueLogo from '../../assets/dashboard/admin/logo.png'
+import { Link } from 'react-router-dom';
 
 const RegisterPage = () => {
-  let inputStyle = "px-3 ml-3 sm:ml-0 w-[20rem] sm:min-w-[22rem] sm:max-w-[22rem] h-[3rem] border border-[#DCDADB] bg-transparent outline-none block rounded-md text-black"
-  const [credentials, setCredentials] = useState({ username: "", email: "", password: "" })
-  const nav = useNavigate()
-
-  const onChangeInput = (e) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value })
-  }
-
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    let loader = toast.loading("Processing Request....")
-    try {
-      if (credentials.email.length === 0 || credentials.username.length === 0 || credentials.password.length === 0) {
-        toast.error("All Fields Are Required")
-        toast.dismiss(loader)
-      }
-      else {
-        let res = await axios.post(`${config.baseUrl}/account/register`, credentials)
-        if (res.status == 200) {
-          toast.dismiss(loader)
-          toast.success(res?.data?.msg)
-          await localStorage.setItem("roleId", res?.data?.data?.info?.roleId)
-          await localStorage.setItem("accountId", res?.data?.data?.info?.id)
-          await localStorage.setItem("token", res?.data?.data?.token)
-          nav("/dashboard/home")
-        }
-      }
-    }
-
-    catch (error) {
-      toast.error(error.response?.data?.msg)
-      toast.dismiss(loader)
-    }
-  }
-
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Hop OnDashboard",
-    "url": "https://Hop OnDashboard.com",
-    "logo": "https://Hop OnDashboard.com/leadbot.svg",
-    "description":"HopOn Dashboardis an AI-based platform designed to revolutionize lead generation and customer interactions, providing advanced analytics and team management tools.",
-  };
-
+  const [viewType, setviewType] = useState("email")
   return (
-    <div className='w-screen h-screen flex justify-between items-center md:flex-row flex-col'>
 
-      {/* LOGO  */}
-      <Link to={"/"} className='flex items-center gap-x-5 fixed top-5 left-3 w-[100%] px-3'>
-        <img src={Logo} alt="HopOn Dashboard- Logo" className='h-[2rem]' />
-        <h1 className='text-lg'>Hop OnDashboard</h1>
-      </Link>
+    <div className='flex justify-center items-center w-screen h-screen'>
 
+      <div className='flex-1 bg-[#037AE0] hidden md:flex justify-center items-center flex-col text-white h-[100%]'>
 
-      {/* IMAGE  */}
-      <div className='hidden  bg-[#F8F5FF] h-[100vh] sm:flex justify-center items-center'>
-        <img src={RegisterBg} alt="HopOn Dashboard- Register" className='h-[30rem] bg-contain' />
-      </div>
+        <h1 className='text-xl'>Send Money Instantly</h1>
+        <p className='mt-1 text-sm text-center w-[50%]'>Use QR codes or unique IDs for instant P2P transfers and quick payments worldwide.</p>
 
-      {/* RIGHT FORM  */}
-      <div className='my-5 mx-10 flex-1 flex justify-center items-start flex-col'>
-
-        <p className='text-4xl font-semibold ml-3 sm:ml-0'>Register</p>
-        <p className='mt-2 text-sm ml-3 sm:ml-0'> <span className='text-[#FF6600] mr-1'>Let's create! </span>and account to use Hop OnDashboard</p>
-        {/* FORM  */}
-        <form action="" onSubmit={handleSubmit}>
-
-
-          <p className='mt-6 mb-3 ml-3 sm:ml-0'>Username</p>
-          <input onChange={(e) => onChangeInput(e)} type="text" name="username" placeholder='mark henry' required={true} className={inputStyle} />
-
-          <p className='mt-6 mb-3 ml-3 sm:ml-0'>Email Address</p>
-          <input onChange={(e) => onChangeInput(e)} type="email" name="email" placeholder='user@mail.com' required={true} className={inputStyle} />
-
-          <p className='mt-6 mb-3 ml-3 sm:ml-0'>Password</p>
-          <input onChange={(e) => onChangeInput(e)} type="password" name="password" placeholder='*******' required={true} className={inputStyle} />
-
-          <input onClick={handleSubmit} type="submit" value="Sign Up" className='bg-[#FF6600] ml-3 sm:ml-0 w-[20.5rem] sm:w-[22rem] h-[3rem] mt-4 sm:mt-2 cursor-pointer hover:bg-[#FF6600] ease-in rounded-md text-white' />
-          <p className='ml-3 sm:ml-0 w-[20.5rem] sm:w-[22rem] text-center mt-3 sm:mt-2 text-sm cursor-pointer md:pb-0 pb-3'>Already have an account? <Link to={"/"} className='text-[#FF6600] font-semibold'>Signin</Link></p>
-
-        </form>
+        <div className='flex justify-center items-center mt-2 h-[75%]'>
+          <img src={AuthImage} alt="" className='h-[100%]' />
+        </div>
 
       </div>
 
+      <div className='flex-1 flex justify-center items-center flex-col h-[100%] bg-[#FCFCFC] sm:mx-0 mx-4 '>
 
+        <div className='flex justify-center items-center gap-x-3'>
+          <img src={BlueLogo} alt="" />
+          <p className='text-lg font-medium'>Global Pay</p>
+        </div>
+
+        <div className='w-[100%] sm:w-[80%] p-3 mt-8 '>
+
+          <h1 className='text-2xl'>Sign up</h1>
+
+          <div className='mt-4 flex items-center gap-x-7'>
+            <h1 onClick={()=>setviewType("email")} className={` cursor-pointer ${viewType=="email" ? "text-[#037AE0]":"text-[#666666]"} pb-1 ${viewType=="email" ? "border-b-2 border-b-[#037AE0]":"border-b border-b-[#fff]"} `}>Email</h1>
+            <h1 onClick={()=>setviewType("phone")} className={` cursor-pointer ${viewType=="phone" ? "text-[#037AE0]":"text-[#666666]"} pb-1 ${viewType=="phone" ? "border-b-2 border-b-[#037AE0]":"border-b border-b-[#fff]"} `}>Phone</h1>
+          </div>
+
+          <div className='mt-3'>
+            <input type={viewType=="email"?"text":"number"} placeholder={viewType=="email"?"e.g ******@gmail.com":"e.g +1********24"} name="" id="" className='h-[2.8rem] w-[100%] sm:w-[24rem] border border-[#DADADA] rounded-md px-3 outline-none' />
+          </div>
+
+          <div className='mt-3 flex items-center gap-x-3'>
+            <input type="checkbox" name="" id="" />
+            <p className='text-sm text-[#989999]'>By clicking ‘Next’, you agree to our Terms of Service</p>
+          </div>
+
+          <Link to={"/otp"}><button className='mt-5 h-[2.8rem] w-[100%] sm:w-[24rem] bg-[#037AE0] text-white rounded-full cursor-pointer'>Next</button></Link>
+
+
+          <div className='flex justify-center items-center gap-x-3 h-[2.8rem] w-[100%] sm:w-[24rem] mt-6 rounded-md shadow-sm border border-[lightgray] cursor-pointer bg-white'>
+            <img src={Google} alt="" />
+            <p>Continue With Google</p>
+          </div>
+          <div className='flex justify-center items-center gap-x-3 h-[2.8rem] w-[100%] sm:w-[24rem] border border-[lightgray] cursor-pointer mt-2 rounded-md shadow-inner bg-white'>
+            <img src={Apple} alt="" />
+            <p>Continue With Apple</p>
+          </div>
+
+
+
+
+        </div>
+
+      </div>
 
     </div>
+
   )
 }
 
 export default RegisterPage
+

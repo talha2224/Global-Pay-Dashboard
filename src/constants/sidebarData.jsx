@@ -1,37 +1,53 @@
-import { FaAddressBook, FaBuilding, FaCalendarAlt, FaRegCalendarCheck, FaUser, FaWallet } from 'react-icons/fa';
+import { FaAddressBook, FaBuilding, FaCalendarAlt, FaRegCalendarCheck, FaRegUser, FaUser, FaWallet } from 'react-icons/fa';
 import { RxDashboard } from 'react-icons/rx';
-import { IoIosCall, IoMdNotifications, IoMdSettings } from "react-icons/io";
-import { MdModeOfTravel, MdOutlineSecurity } from 'react-icons/md';
+import { IoIosCall, IoIosSettings, IoMdCard, IoMdDocument, IoMdNotifications, IoMdSettings } from "react-icons/io";
+import { MdModeOfTravel, MdOutlineKey, MdOutlineSecurity } from 'react-icons/md';
 import { IoCarSportSharp, IoKeySharp } from 'react-icons/io5';
 import { AiOutlineTransaction } from "react-icons/ai";
+import { RiHome5Fill } from "react-icons/ri";
+import { PiHandWithdraw } from "react-icons/pi";
+import { BsFillSendArrowDownFill } from "react-icons/bs";
+import { RiLuggageDepositFill } from "react-icons/ri";
+import { GrTransaction } from "react-icons/gr";
 
 export const navData = [
     {
         id: 1,
         link: "home",
-        name: "Dashboard",
-        icon: <RxDashboard />
+        name: "Home",
+        icon: <RiHome5Fill />
     },
     {
         id: 7,
-        link: "users",
-        name: "Users",
-        icon: <FaUser />
+        link: "cards",
+        name: "Cards",
+        icon: <IoMdCard  />
     },
     {
         id: 4,
-        link: "bookings",
-        name: "Bookings",
-        icon: <MdModeOfTravel />
+        link: "deposit",
+        name: "Deposit",
+        icon: <RiLuggageDepositFill />
     },
     {
         id: 3,
-        link: "wallet",
-        name: "Walllet History",
-        icon: <FaWallet />
+        link: "send",
+        name: "Send",
+        icon: <BsFillSendArrowDownFill  />
+    },
+    {
+        id: 30,
+        link: "withdraw",
+        name: "Withdraw",
+        icon: <PiHandWithdraw  />
+    },
+    {
+        id: 35,
+        link: "settings",
+        name: "Settings",
+        icon: <IoIosSettings  />
     }
 ];
-
 
 export const adminNav = [
     {
@@ -71,3 +87,36 @@ export const adminNav = [
         icon: <IoMdSettings className='text-[#5CCFFE]'  />
     }
 ]
+
+export const companyNavData = [
+    {
+        id: 1,
+        link: "home",
+        name: "Home",
+        icon: <RiHome5Fill/>
+    },
+    {
+        id: 7,
+        link: "api",
+        name: "Api",
+        icon: <MdOutlineKey/>
+    },
+    {
+        id: 4,
+        link: "transaction",
+        name: "Transaction",
+        icon: <GrTransaction/>
+    },
+    {
+        id: 3,
+        link: "documentation",
+        name: "Documentation",
+        icon: <IoMdDocument/>
+    },
+    {
+        id: 35,
+        link: "profile",
+        name: "Profile",
+        icon: <FaRegUser/>
+    }
+];

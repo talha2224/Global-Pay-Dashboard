@@ -2,7 +2,7 @@ import React from 'react'
 import Sidebar from './sidebar/Sidebar'
 import { Outlet, useLocation } from 'react-router-dom'
 import Header from './Header'
-const Layout = () => {
+const CompanyLayout = () => {
   const location = useLocation().pathname.split("/")[2];
 
   return (
@@ -21,4 +21,4 @@ const Layout = () => {
   )
 }
 
-export default Layout
+export default CompanyLayout

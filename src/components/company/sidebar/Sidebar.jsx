@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Logo from '../../../assets/dashboard/admin/logo.png';
-import { navData } from '../../../constants/sidebarData';
+import { companyNavData } from '../../../constants/sidebarData';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { IoLogOut } from 'react-icons/io5';
 import { useSidebar } from '../../../context/SidebarContext';
 
 const Sidebar = () => {
 
-  const location = useLocation().pathname.split("/")[2];
+  const location = useLocation().pathname.split("/")[3];
   const { isNavOpen, toggleNav } = useSidebar();
   const sidebarRef = useRef(null);
   const nav = useNavigate()
@@ -40,8 +40,8 @@ const Sidebar = () => {
         </div>
 
         <div className='mt-10'>
-          {navData?.map((i) => (
-            <Link to={`/dashboard/${i.link}`} key={i.id} className={`flex ${location == i.link && "bg-[#F5F5F5]"} px-5 p-2 rounded-full items-center gap-x-3 mb-2 cursor-pointer ${location == i.link ? "text-black" : "text-[#8F8F8F]"}`}>
+          {companyNavData?.map((i) => (
+            <Link to={`/company/dashboard/${i.link}`} key={i.id} className={`flex ${location == i.link && "bg-[#F5F5F5]"} px-5 p-2 rounded-full items-center gap-x-3 mb-2 cursor-pointer ${location == i.link ? "text-[#037AE0]" : "text-[#8F8F8F]"}`}>
               <div>{i.icon}</div>
               <p className='text-sm'>{i.name}</p>
             </Link>
@@ -68,7 +68,7 @@ const Sidebar = () => {
             <p className='text-[#a6b0cf] mt-[2rem] mb-4 text-xs'>MENU</p>
 
             <div className='mt-10'>
-              {navData?.map((i) => (
+              {companyNavData?.map((i) => (
                 <Link to={`/dashboard/${i.link}`} key={i.id} className={`flex ${location == i.link && "bg-[#F5F5F5]"} px-5 p-2 rounded-full items-center gap-x-3 mb-2 cursor-pointer ${location == i.link ? "text-black" : "text-[#8F8F8F]"}`}>
                   <div>{i.icon}</div>
                   <p className='text-sm'>{i.name}</p>
