@@ -38,7 +38,7 @@ const CompanyOtpPage = () => {
                     <p className='text-lg font-medium'>Global Pay</p>
                 </div>
 
-                <div className='w-[100%] sm:w-[80%] p-3 mt-8 '>
+                <div className='w-[100%] p-3 mt-8 '>
 
                     <h1 className='text-2xl'>Verification code</h1>
                     <h1 className='mt-1 text-sm text-[#C3BFAE]'>We’ve sent the code to jo******@gmail.com</h1>
