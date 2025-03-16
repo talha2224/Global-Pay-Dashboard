@@ -35,6 +35,7 @@ import CompanyApi from './pages/Company/CompanyApi';
 import CopmpanyTransaction from './pages/Company/CopmpanyTransaction';
 import CompanyDocumentation from './pages/Company/CompanyDocumentation';
 import CompanyProfile from './pages/Company/CompanyProfile';
+import LandingPage from './pages/LandingPage';
 const RegisterPage = lazy(() => import('./pages/Auth/RegisterPage'));
 const Layout = lazy(() => import('./components/dashboard/Layout'));
 const Home = lazy(() => import('./pages/Dashboard/Home'));
@@ -86,7 +87,8 @@ function App() {
             </Route>
 
 
-            <Route path='/' element={<SelectAccountPage />} />
+            <Route path='/' element={<LandingPage />} />
+            <Route path='/login' element={<SelectAccountPage />} />
             <Route path='/register' element={<RegisterPage />} />
             <Route path='/otp' element={<OtpPage />} />
             <Route path='/password' element={<PasswordPage />} />
