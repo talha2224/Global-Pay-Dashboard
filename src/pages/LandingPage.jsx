@@ -33,7 +33,7 @@ const LandingPage = () => {
             </div>
 
 
-            <h1 className='text-[3rem] mt-[5rem] font-medium'>Global Payments, <br /> Simplified</h1>
+            <h1 className='text-[3rem] mt-8 sm:mt-[5rem] font-medium'>Global Payments, <br /> Simplified</h1>
 
             <p className='md:w-[50%]'>Empower your finances with GlobaPay. Issue virtual and physical Visa/MasterCards, make seamless deposits and withdrawals, and transact securely—anytime, anywhere.</p>
 
@@ -44,8 +44,7 @@ const LandingPage = () => {
 
             <div className='absolute bottom-10'>
                 <p>Accepted by 130M+ merchants worldwide</p>
-
-                <img src={companies} alt="" className='mt-10' />
+                <img src={companies} alt="" className='mt-3 sm:mt-10' />
             </div>
 
         </div>
