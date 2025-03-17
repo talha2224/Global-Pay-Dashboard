@@ -11,13 +11,14 @@ import { CiCirclePlus } from 'react-icons/ci';
 import Red from '../../../assets/dashboard/admin/red.png'
 import Green from '../../../assets/dashboard/admin/green.png'
 import Bar from '../../../assets/dashboard/admin/bar.png'
-import { IoBarChart } from "react-icons/io5";
+import { IoArrowBackOutline, IoBarChart } from "react-icons/io5";
 import { GrTransaction } from "react-icons/gr";
 import Flag1 from '../../../assets/dashboard/admin/flag.png'
 
 const TransactionHistoryPage = () => {
 
     const [showDetails, setshowDetails] = useState(false)
+    const [showDetails2, setshowDetails2] = useState(false)
     return (
 
         <div className=' overflow-y-auto'>
@@ -184,6 +185,71 @@ const TransactionHistoryPage = () => {
                             <div className='mt-2 flex justify-between items-center'>
                                 <h1 className='text-[#8F8F8F]'>Amount</h1>
                                 <h1 className='text-[#1ABD36]'>$200</h1>
+                            </div>
+
+                            <div className='mt-2 flex justify-between items-center'>
+                                <h1 className='text-[#000]'>Fee Breakdown</h1>
+                                <button onClick={() => { setshowDetails(false); setshowDetails2(true) }} className='border border-[#8F8F8F] px-3 py-1 text-sm rounded-full cursor-pointer'>View all</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                )
+            }
+
+
+            {
+                showDetails2 && (
+                    <div className="fixed top-0 left-0 w-screen h-screen inset-0 bg-black bg-opacity-50 flex justify-center items-center transition-opacity duration-300 ease-in-out" onClick={() => setshowDetails(false)}>
+
+                        <div className="bg-white rounded-lg shadow-lg p-6 overflow-y-auto w-[25rem] transform scale-95 opacity-0 animate-fade-in" onClick={(e) => e.stopPropagation()}>
+
+                            <div className='flex justify-between items-center'>
+
+                                <IoArrowBackOutline onClick={() => { setshowDetails2(false); setshowDetails(true) }} className=' cursor-pointer' />
+                                <div>
+                                    <h1>Fee Breakdown</h1>
+                                </div>
+
+                                <div></div>
+
+                            </div>
+
+                            <div className='mt-2 flex justify-between items-center rounded-md p-2 bg-[#F8F8F8]'>
+                                <p>Fees</p>
+                            </div>
+
+                            <div>
+                                <div className='mt-2 flex justify-between items-center'>
+                                    <h1 className='text-[#8F8F8F]'>Transfer</h1>
+                                    <h1 className=' text-[#037AE0]'>$200,000</h1>
+                                </div>
+                                <div className='mt-2 flex justify-between items-center'>
+                                    <h1 className='text-[#8F8F8F]'>Withdrawal</h1>
+                                    <h1 className=' text-[#FF0500]'>-$50,000</h1>
+                                </div>
+                                <div className='mt-2 flex justify-between items-center'>
+                                    <h1 className='text-[#8F8F8F]'>Deposit</h1>
+                                    <h1 className=' text-[#037AE0]'>$200,000</h1>
+                                </div>
+                                <div className='mt-2 flex justify-between items-center'>
+                                    <h1 className='text-[#8F8F8F]'>Withdrawal</h1>
+                                    <h1 className=' text-[#FF0500]'>-$50,000</h1>
+                                </div>
+                                <div className='mt-2 flex justify-between items-center'>
+                                    <h1 className='text-[#8F8F8F]'>Transfer</h1>
+                                    <h1 className=' text-[#037AE0]'>$200,000</h1>
+                                </div>
+                                <div className='mt-2 flex justify-between items-center'>
+                                    <h1 className='text-[#8F8F8F]'>Withdrawal</h1>
+                                    <h1 className=' text-[#FF0500]'>-$50,000</h1>
+                                </div>
+                                <div className='mt-2 flex justify-between items-center'>
+                                    <h1 className='text-[#8F8F8F]'>Transfer</h1>
+                                    <h1 className=' text-[#037AE0]'>$200,000</h1>
+                                </div>
+
                             </div>
 
                         </div>

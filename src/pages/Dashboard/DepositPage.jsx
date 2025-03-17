@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Qr from '../../assets/dashboard/qr.png'
 import { FaEye } from "react-icons/fa";
 import USD from '../../assets/dashboard/usd.png'
@@ -7,12 +7,36 @@ import BTC from '../../assets/dashboard/btc.png'
 import Eth from '../../assets/dashboard/eth.png'
 import { IoIosGift } from "react-icons/io";
 import Badge from '../../assets/dashboard/badge.png'
-
+import { RxCross1 } from "react-icons/rx";
 import MasterCard from '../../assets/dashboard/mastercard.png'
 const DepositPage = () => {
 
     const [showDepositModel, setShowDepositModel] = useState(false);
+    const [confirmation, setconfirmation] = useState(false)
     const [showQrCode, setShowQrCode] = useState(false)
+
+    const [otp, setOtp] = useState(['', '', '', '', '', '']);
+    const inputRefs = useRef([]);
+
+    useEffect(() => {
+        inputRefs.current = inputRefs.current.slice(0, 6);
+    }, []);
+
+    const handleOtpChange = (index, value) => {
+        const newOtp = [...otp];
+        newOtp[index] = value;
+        setOtp(newOtp);
+
+        if (value && index < 5) {
+            inputRefs.current[index + 1]?.focus();
+        }
+    };
+
+    const handleKeyDown = (index, event) => {
+        if (event.key === 'Backspace' && !otp[index] && index > 0) {
+            inputRefs.current[index - 1]?.focus();
+        }
+    };
 
     return (
 
@@ -185,7 +209,46 @@ const DepositPage = () => {
                                 </div>
                             </div>
 
-                            <button onClick={() => { setShowDepositModel(false); setShowQrCode(true) }} className="bg-blue-600 text-white w-full h-12 flex justify-center items-center mt-4 rounded-full">Confirm</button>
+                            <button onClick={() => { setShowDepositModel(false); setconfirmation(true) }} className="bg-blue-600 text-white w-full h-12 flex justify-center items-center mt-4 rounded-full">Confirm</button>
+                        </div>
+                    </div>
+                )
+            }
+
+            {
+                confirmation && (
+                    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-40">
+
+                        <div className="bg-white w-[25rem] p-5 rounded-xl">
+
+
+                            <div className="flex justify-between items-center">
+                                <div></div>
+                                <RxCross1 onClick={() => setconfirmation(false)} className="text-[#8f8f8f] cursor-pointer" />
+                            </div>
+
+                            <p className="text-lg font-medium">Verification code</p>
+                            <p className="text-sm mt-1 text-[#8f8f8f]">We’ve sent the code to jo******@gmail.com</p>
+
+                            <div className=" flex items-center gap-x-3 mt-4">
+                                <p className="pb-1 border-b border-b-[#037AE0] text-[#037AE0]">Email</p>
+                                <p className="pb-1  text-[#666666]">Phone</p>
+                            </div>
+
+                            <div className='mt-4 flex items-center gap-x-3'>
+                                {otp.map((digit, index) => (
+                                    <input key={index} type='text' maxLength='1' value={digit} onChange={(e) => handleOtpChange(index, e.target.value)} onKeyDown={(e) => handleKeyDown(index, e)} ref={(input) => (inputRefs.current[index] = input)} className='w-12 h-12 border border-gray-300 rounded-md text-center text-2xl focus:outline-none focus:border-blue-500' />
+                                ))}
+                            </div>
+
+                            <button className="bg-[#EBF5FD] text-[#666666] text-xs px-4 py-1 rounded-full mt-3">59s</button>
+
+                            <button onClick={() => { setShowQrCode(true); setconfirmation(false) }} className="bg-blue-600 text-white w-full h-12 flex justify-center items-center mt-4 rounded-full">Complete verification</button>
+
+
+                            <div className='flex justify-center items-center mt-10 text-[#8F8F8F] w-[100%]'>
+                                <p className='cursor-pointer'>Resend code?</p>
+                            </div>
                         </div>
                     </div>
                 )

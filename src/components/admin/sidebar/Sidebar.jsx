@@ -85,13 +85,13 @@ const Sidebar = () => {
         showLogout && (
           <div className="fixed top-0 left-0 w-screen h-screen inset-0 bg-black bg-opacity-50 flex justify-center items-center transition-opacity duration-300 ease-in-out" onClick={() => setshowLogout(false)}>
 
-            <div className="bg-white rounded-lg shadow-lg p-6 overflow-y-auto w-[25rem] transform scale-95 opacity-0 animate-fade-in" onClick={(e) => e.stopPropagation()}>
+            <div className="bg-white rounded-lg shadow-lg px-3 py-6 overflow-y-auto w-[15rem] transform scale-95 opacity-0 animate-fade-in" onClick={(e) => e.stopPropagation()}>
 
               <div className='flex justify-center items-center w-[100%] flex-col'>
                   <h1>Log out?</h1>
                   <p className='mt-2 text-center text-sm'>Sed ut perspiciatis unde omnis iste natus error sit voluptatem</p>
 
-                  <h1 onClick={()=>handleLogout(false)} className='cursor-pointer mt-2 py-2 border-t border-t-[#808080] border-b border-b-[#808080] w-[100%] text-center'>Cancel</h1>
+                  <h1 onClick={()=>handleLogout(false)} className='cursor-pointer mt-2 py-2 border-t border-t-[#cecece] border-b border-b-[#cecece] w-[100%] text-center'>Cancel</h1>
                   <h1 onClick={()=>handleLogout(true)} className='text-red-600 cursor-pointer pt-2'>Logout</h1>
               </div>
 
