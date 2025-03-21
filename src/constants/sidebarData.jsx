@@ -1,14 +1,15 @@
-import { FaAddressBook, FaBuilding, FaCalendarAlt, FaRegCalendarCheck, FaRegUser, FaUser, FaWallet } from 'react-icons/fa';
+import { FaBuilding,FaRegUser } from 'react-icons/fa';
 import { RxDashboard } from 'react-icons/rx';
-import { IoIosCall, IoIosSettings, IoMdCard, IoMdDocument, IoMdNotifications, IoMdSettings } from "react-icons/io";
-import { MdModeOfTravel, MdOutlineKey, MdOutlineSecurity } from 'react-icons/md';
-import { IoCarSportSharp, IoKeySharp } from 'react-icons/io5';
+import { IoIosSettings, IoMdCard, IoMdDocument, IoMdSettings } from "react-icons/io";
+import { MdOutlineKey, MdOutlineSecurity } from 'react-icons/md';
+import { IoKeySharp } from 'react-icons/io5';
 import { AiOutlineTransaction } from "react-icons/ai";
 import { RiHome5Fill } from "react-icons/ri";
 import { PiHandWithdraw } from "react-icons/pi";
 import { BsFillSendArrowDownFill } from "react-icons/bs";
 import { RiLuggageDepositFill } from "react-icons/ri";
 import { GrTransaction } from "react-icons/gr";
+import { CgDollar } from "react-icons/cg";
 
 export const navData = [
     {
@@ -34,6 +35,12 @@ export const navData = [
         link: "send",
         name: "Send",
         icon: <BsFillSendArrowDownFill  />
+    },
+    {
+        id: 1,
+        link: "stake",
+        name: "Stake",
+        icon: <CgDollar/>
     },
     {
         id: 30,

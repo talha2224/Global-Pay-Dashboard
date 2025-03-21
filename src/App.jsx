@@ -36,6 +36,7 @@ import CopmpanyTransaction from './pages/Company/CopmpanyTransaction';
 import CompanyDocumentation from './pages/Company/CompanyDocumentation';
 import CompanyProfile from './pages/Company/CompanyProfile';
 import LandingPage from './pages/LandingPage';
+import StakePage from './pages/Dashboard/StakePage';
 const RegisterPage = lazy(() => import('./pages/Auth/RegisterPage'));
 const Layout = lazy(() => import('./components/dashboard/Layout'));
 const Home = lazy(() => import('./pages/Dashboard/Home'));
@@ -110,6 +111,7 @@ function App() {
               <Route path="send" element={<SendPage />} />
               <Route path="withdraw" element={<WithdrawPage />} />
               <Route path="settings" element={<SettingsPage />} />
+              <Route path="stake" element={<StakePage/>} />
             </Route>
 
             <Route path="/company/dashboard/" element={<CompanyLayout />}>
